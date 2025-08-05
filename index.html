@@ -102,105 +102,7 @@
 
   <script>
     const queenList = [
-      { id:"tammie",   name:"Tammie Brown" },
-      { id:"raven",    name:"Raven" },
-      { id:"jujubee",  name:"Jujubee" },
-      { id:"kylie",    name:"Kylie Sonique Love" },       // actualizado
-      { id:"raja",     name:"Raja" },
-      { id:"manila",   name:"Manila Luzon" },
-      { id:"alexis",   name:"Alexis Mateo" },
-      { id:"delta",    name:"Delta Work" },
-      { id:"chad",     name:"Chad Michaels" },
-      { id:"latrice",  name:"Latrice Royale" },
-      { id:"willam",   name:"Willam" },
-      { id:"jinkx",    name:"Jinkx Monsoon" },
-      { id:"alaska",   name:"Alaska" },
-      { id:"roxxxy",   name:"Roxxxy Andrews" },
-      { id:"detox",    name:"Detox" },
-      { id:"montrese", name:"Coco Montrese" },
-      { id:"alyssa",   name:"Alyssa Edwards" },
-      { id:"bianca",   name:"Bianca del Rio" },
-      { id:"adore",    name:"Adore Delano" },
-      { id:"courtney", name:"Courtney Act" },
-      { id:"ben",      name:"BenDeLaCreme" },
-      { id:"violet",   name:"Violet Chachki" },
-      { id:"ginger",   name:"Ginger Minj" },
-      { id:"pearl",    name:"Pearl" },
-      { id:"kennedy",  name:"Kennedy Davenport" },
-      { id:"katya",    name:"Katya" },
-      { id:"bob",      name:"Bob the Drag Queen" },
-      { id:"naomi",    name:"Naomi Smalls" },
-      { id:"derrick",  name:"Derrick Barry" },
-      { id:"velour",   name:"Sasha Velour" },
-      { id:"peppermint", name:"Peppermint" },
-      { id:"shea",     name:"Shea Couleé" },
-      { id:"trinity",  name:"Trinity the Tuck" },
-      { id:"valentina", name:"Valentina" },
-      { id:"aja",      name:"Aja" },
-      { id:"aquaria",  name:"Aquaria" },
-      { id:"eureka",   name:"Eureka" },
-      { id:"monet",    name:"Monét X Change" },            // actualizado
-      { id:"yvie",     name:"Yvie Oddly" },
-      { id:"brooke",   name:"Brooke Lynn Hytes" },
-      { id:"vanjie",   name:"Vanessa Vanjie Mateo" },
-      { id:"plastique", name:"Plastique Tiara" },
-      { id:"jaida",    name:"Jaida Essence Hall" },
-      { id:"crystal",  name:"Crystal Methyd" },
-      { id:"gigi",     name:"Gigi Goode" },
-      { id:"symone",   name:"Symone" },
-      { id:"gottmik",  name:"Gottmik" },
-      { id:"kandy",    name:"Kandy Muse" },
-      { id:"willow",   name:"Willow Pill" },
-      { id:"angeria",  name:"Angeria Paris VanMichaels" },
-      { id:"bosco",    name:"Bosco" },
-      { id:"daya",     name:"Daya Betty" },
-      { id:"jorgeous", name:"Jorgeous" },
-      { id:"colby",    name:"Sasha Colby" },
-      { id:"anetra",   name:"Anetra" },
-      { id:"mistress", name:"Mistress Isabelle Brooks" },
-      { id:"luxx",     name:"Luxx Noir London" },
-      { id:"loosey",   name:"Loosey LaDuca" },
-      { id:"nymphia",  name:"Nymphia Wind" },
-      { id:"sapphira", name:"Sapphira Cristál" },
-      { id:"plane",    name:"Plane Jane" },
-      { id:"morphine", name:"Morphine Love Dion" },
-      { id:"dawn",     name:"Dawn" },
-      { id:"jewels",   name:"Jewels Sparkles" },
-      { id:"kori",     name:"Kori King" },
-      { id:"lexi",     name:"Lexi Love" },
-      { id:"lydia",    name:"Lydia B Collins" },
-      { id:"onya",     name:"Onya Nurve" },
-      { id:"susie",    name:"Susie Toot" },
-      { id:"farala",   name:"Carmen Farala" },
-      { id:"sagittaria", name:"Sagittaria" },
-      { id:"pupi",     name:"Pupi Poisson" },
-      { id:"sharonne", name:"Sharonne" },
-      { id:"marina",   name:"Marina" },
-      { id:"juriji",   name:"Juriji Der Klee" },
-      { id:"samantha", name:"Samantha Ballentines" },
-      { id:"pakita",   name:"Pakita" },
-      { id:"kelly",    name:"Kelly Roller" },
-      { id:"angelita", name:"Angelita la Perversa" },
-      { id:"chloe",    name:"Chloe Vittu" },
-      { id:"ninia",    name:"La Niña Delantro" },
-      { id:"coco",     name:"Le Cocó" },
-      { id:"vivienne", name:"The Vivienne" },
-      { id:"lawrence", name:"Lawrence Chaney" },
-      { id:"bimini",   name:"Bimini" },
-      { id:"tayce",    name:"Tayce" },
-      { id:"awhora",   name:"A’Whora" },
-      { id:"tia",      name:"Tia Kofi" },
-      { id:"summers",  name:"Marina Summers" },
-      { id:"grande",   name:"La Grande Dame" },
-      { id:"hannah",   name:"Hannah Conda" },
-      { id:"dakota",   name:"Dakota Schiffer" },
-      { id:"kyran",    name:"Kyran Thrax" },
-      { id:"voix",     name:"La Voix" },
-      { id:"priyanka", name:"Priyanka" },
-      { id:"jimbo",    name:"Jimbo" },
-      { id:"lemon",    name:"Lemon" },
-      { id:"icesis",   name:"Icesis Couture" },
-      { id:"bebe",     name:"Bebe Zahara Benet" }        // reemplaza a Fiercalicious
+      /* ... tus {id, name} originales ... */
     ];
 
     let sortedLists, leftArr, rightArr, merged;
@@ -217,8 +119,7 @@
       const pct = Math.min(100,
         Math.round((comparisonsDone / totalComparisons) * 100)
       );
-      progressDiv.textContent =
-        `Calculando ${pct}% de las elecciones hechas`;
+      progressDiv.textContent = `Calculando ${pct}% de las elecciones hechas`;
     }
 
     function saveState() {
@@ -306,13 +207,8 @@
           <div class="name">${q.name}</div>
         `;
         div.onclick = () => {
-          if (id === a) {
-            leftArr.shift();
-            merged.push(a);
-          } else {
-            rightArr.shift();
-            merged.push(b);
-          }
+          if (id === a) leftArr.shift(), merged.push(a);
+          else           rightArr.shift(), merged.push(b);
           saveState();
           compareNext();
         };
