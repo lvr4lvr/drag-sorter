@@ -16,7 +16,7 @@
       font-size: 2rem;
     }
     #controls {
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
     }
     #controls button {
       margin: 0 .5rem;
@@ -31,6 +31,11 @@
     }
     #controls button:hover {
       background: #e5589c;
+    }
+    #progress {
+      color: #ccc;
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
     }
     #chooser {
       display: flex;
@@ -91,6 +96,7 @@
     <button id="resetBtn">Reiniciar sorter</button>
     <button id="exportBtn" style="display:none">Exportar ranking</button>
   </div>
+  <div id="progress">Progreso: 0%</div>
   <div id="chooser"></div>
   <div id="results"></div>
 
@@ -129,11 +135,11 @@
       { id:"peppermint", name:"Peppermint" },
       { id:"shea",     name:"Shea Couleé" },
       { id:"trinity",  name:"Trinity the Tuck" },
-      { id:"valentina",  name:"Valentina" },
+      { id:"valentina", name:"Valentina" },
       { id:"aja",      name:"Aja" },
       { id:"aquaria",  name:"Aquaria" },
       { id:"eureka",   name:"Eureka" },
-      { id:"monet",    name:"Monet X Change" },
+      { id:"monet",    name:"Monét X Change" },
       { id:"yvie",     name:"Yvie Oddly" },
       { id:"brooke",   name:"Brooke Lynn Hytes" },
       { id:"vanjie",   name:"Vanessa Vanjie Mateo" },
@@ -153,7 +159,7 @@
       { id:"anetra",   name:"Anetra" },
       { id:"mistress", name:"Mistress Isabelle Brooks" },
       { id:"luxx",     name:"Luxx Noir London" },
-      { id:"loosey",   name:"Loosey LaDuca" },
+      { id:"loosey",   name:"Loosey Laduca" },
       { id:"nymphia",  name:"Nymphia Wind" },
       { id:"sapphira", name:"Sapphira Cristál" },
       { id:"plane",    name:"Plane Jane" },
@@ -164,7 +170,7 @@
       { id:"lexi",     name:"Lexi Love" },
       { id:"lydia",    name:"Lydia B Collins" },
       { id:"onya",     name:"Onya Nurve" },
-      { id:"suzie",    name:"Suzie Toot" },
+      { id:"susie",    name:"Susie Toot" },
       { id:"farala",   name:"Carmen Farala" },
       { id:"sagittaria", name:"Sagittaria" },
       { id:"pupi",     name:"Pupi Poisson" },
@@ -177,7 +183,7 @@
       { id:"angelita", name:"Angelita la Perversa" },
       { id:"chloe",    name:"Chloe Vittu" },
       { id:"ninia",    name:"La Niña Delantro" },
-      { id:"coco",     name:"Le Coco" },
+      { id:"coco",     name:"Le Cocó" },
       { id:"vivienne", name:"The Vivienne" },
       { id:"lawrence", name:"Lawrence Chaney" },
       { id:"bimini",   name:"Bimini" },
@@ -194,17 +200,32 @@
       { id:"jimbo",    name:"Jimbo" },
       { id:"lemon",    name:"Lemon" },
       { id:"icesis",   name:"Icesis Couture" },
-      { id:"bebe",   name:"Bebe Zahara Benet" }
+      { id:"bebe",     name:"Bebe Zahara Benet" }
     ];
 
     let sortedLists, leftArr, rightArr, merged;
+    let comparisonsDone = 0;
+    const totalComparisons = Math.round(queenList.length * Math.log2(queenList.length));
 
-    function saveState() {
-      localStorage.setItem('dragSorterState', JSON.stringify({
-        sortedLists, leftArr, rightArr, merged
-      }));
+    const chooserDiv  = document.getElementById('chooser');
+    const resultsDiv  = document.getElementById('results');
+    const progressDiv = document.getElementById('progress');
+    const exportBtn   = document.getElementById('exportBtn');
+    const resetBtn    = document.getElementById('resetBtn');
+
+    function updateProgress() {
+      const pct = Math.min(100,
+        Math.round((comparisonsDone / totalComparisons) * 100)
+      );
+      progressDiv.textContent =
+        `Progreso: ${comparisonsDone}/${totalComparisons} (${pct}%)`;
     }
 
+    function saveState() {
+      localStorage.setItem('dragSorterState',
+        JSON.stringify({ sortedLists, leftArr, rightArr, merged, comparisonsDone })
+      );
+    }
     function clearState() {
       localStorage.removeItem('dragSorterState');
     }
@@ -213,12 +234,15 @@
       const saved = localStorage.getItem('dragSorterState');
       if (saved) {
         const s = JSON.parse(saved);
-        sortedLists = s.sortedLists;
-        leftArr  = s.leftArr;
-        rightArr = s.rightArr;
-        merged   = s.merged;
-        // determinar fase
-        if (sortedLists.length === 1 && leftArr.length===0 && rightArr.length===0) {
+        sortedLists     = s.sortedLists;
+        leftArr         = s.leftArr;
+        rightArr        = s.rightArr;
+        merged          = s.merged;
+        comparisonsDone = s.comparisonsDone;
+        updateProgress();
+        if (sortedLists.length === 1 &&
+            leftArr.length === 0 &&
+            rightArr.length === 0) {
           showFinal(sortedLists[0]);
         } else if (leftArr && rightArr) {
           compareNext();
@@ -227,7 +251,9 @@
         }
       } else {
         const ids = queenList.map(q => q.id).sort(() => Math.random() - .5);
-        sortedLists = ids.map(id => [id]);
+        sortedLists     = ids.map(id => [id]);
+        comparisonsDone = 0;
+        updateProgress();
         nextMerge();
       }
     }
@@ -264,18 +290,19 @@
         compareNext();
         return;
       }
+      comparisonsDone++;
+      updateProgress();
       showOptions(leftArr[0], rightArr[0]);
     }
 
     function showOptions(a, b) {
-      const c = document.getElementById("chooser");
-      c.innerHTML = "";
+      chooserDiv.innerHTML = '';
       [a, b].forEach(id => {
         const q = queenList.find(x => x.id === id);
-        const div = document.createElement("div");
-        div.className = "option";
+        const div = document.createElement('div');
+        div.className = 'option';
         div.innerHTML = `
-          <img src="./imgs/${q.id}.png" alt="${q.name}">
+          <img src="imgs/${q.id}.png" alt="${q.name}">
           <div class="name">${q.name}</div>
         `;
         div.onclick = () => {
@@ -289,43 +316,41 @@
           saveState();
           compareNext();
         };
-        c.appendChild(div);
+        chooserDiv.appendChild(div);
       });
     }
 
     function showFinal(finalIds) {
       clearState();
-      document.getElementById("chooser").style.display = "none";
-      const results = document.getElementById("results");
-      results.style.display = "block";
-      results.innerHTML = "<h2>🏁 Tu ranking final</h2>";
+      chooserDiv.style.display = 'none';
+      progressDiv.style.display = 'none';
+      resultsDiv.style.display = 'block';
+      resultsDiv.innerHTML = '<h2>🏁 Tu ranking final</h2>';
       finalIds.forEach((id, i) => {
         const q = queenList.find(x => x.id === id);
-        const div = document.createElement("div");
-        div.className = "result-item";
+        const div = document.createElement('div');
+        div.className = 'result-item';
         div.textContent = `${i+1}. ${q.name}`;
-        results.appendChild(div);
+        resultsDiv.appendChild(div);
       });
-      // mostrar botón exportar
-      const eb = document.getElementById("exportBtn");
-      eb.style.display = "inline-block";
-      eb.onclick = exportRanking;
+      exportBtn.style.display = 'inline-block';
+      exportBtn.onclick = exportRanking;
     }
 
     function exportRanking() {
-      const lines = Array.from(document.querySelectorAll("#results .result-item"))
-                         .map(el => el.textContent)
-                         .join("\n");
-      const blob = new Blob([lines], {type: "text/plain"});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "ranking.txt";
+      const lines = Array.from(
+        document.querySelectorAll('#results .result-item')
+      ).map(el => el.textContent).join('\n');
+      const blob = new Blob([lines], { type: 'text/plain' });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href     = url;
+      a.download = 'ranking.txt';
       a.click();
       URL.revokeObjectURL(url);
     }
 
-    document.getElementById("resetBtn").onclick = () => {
+    resetBtn.onclick = () => {
       clearState();
       location.reload();
     };
