@@ -101,7 +101,6 @@
   <div id="results"></div>
 
   <script>
-    // Lista final de 99 queens con IDs y nombres correctos
     const queenList = [
       {id:"tammie",   name:"Tammie Brown"},
       {id:"raven",    name:"Raven"},
@@ -133,7 +132,7 @@
       {id:"naomi",    name:"Naomi Smalls"},
       {id:"derrick",  name:"Derrick Barry"},
       {id:"velour",   name:"Sasha Velour"},
-      {id:"peppermint",name:"Peppermint"},
+      {id:"peppermint", name:"Peppermint"},
       {id:"shea",     name:"Shea Couleé"},
       {id:"trinity",  name:"Trinity the Tuck"},
       {id:"valentina",name:"Valentina"},
@@ -250,7 +249,6 @@
           nextMerge();
         }
       } else {
-        // barajar IDs y crear listas individuales
         const ids = queenList.map(q => q.id).sort(() => Math.random() - .5);
         sortedLists     = ids.map(id => [id]);
         comparisonsDone = 0;
@@ -303,7 +301,7 @@
         const div = document.createElement('div');
         div.className = 'option';
         div.innerHTML = `
-          <img src="./imgs/${q.id}.png" alt="${q.name}">
+          <img src="imgs/${q.id}.png" alt="${q.name}">
           <div class="name">${q.name}</div>
         `;
         div.onclick = () => {
@@ -353,5 +351,6 @@
 
     window.onload = startSort;
   </script>
+
 </body>
 </html>
